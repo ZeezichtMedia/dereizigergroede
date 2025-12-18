@@ -1,0 +1,136 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import marktImg from "../../assets/images/omgeving/markt.jpg";
+import strandImg from "../../assets/images/omgeving/strand.jpg";
+import waterdunenImg from "../../assets/images/omgeving/waterdunen.jpg";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "nl" } },
+    { params: { lang: "en" } },
+    { params: { lang: "de" } },
+  ];
+}
+
+const { lang } = Astro.params;
+
+const content = {
+  nl: {
+    title: "Ontdek Groede en Omgeving",
+    intro:
+      "Groede is een kunstzinnig en historisch dorpje in Zeeuws-Vlaanderen. Laat u verrassen door de authentieke sfeer en de prachtige natuur.",
+    highlights: [
+      {
+        title: "De Markt van Groede",
+        desc: "Direct voor de deur vindt u de gezellige markt met terrassen en de Grote Kerk.",
+        image: marktImg,
+      },
+      {
+        title: "Het Strand",
+        desc: "Op slechts 3 kilometer afstand liggen de schoonste stranden van Nederland.",
+        image: strandImg,
+      },
+      {
+        title: "Waterdunen",
+        desc: "Een uniek natuur- en recreatiegebied waar eb en vloed vrij spel hebben.",
+        image: waterdunenImg,
+      },
+    ],
+  },
+  en: {
+    title: "Discover Groede and Surroundings",
+    intro:
+      "Groede is an artistic and historic village in Zeeuws-Vlaanderen. Be surprised by the authentic atmosphere and beautiful nature.",
+    highlights: [
+      {
+        title: "Groede Market Square",
+        desc: "Right on your doorstep you will find the cozy market with terraces and the Great Church.",
+        image: marktImg,
+      },
+      {
+        title: "The Beach",
+        desc: "Just 3 kilometers away are the cleanest beaches in the Netherlands.",
+        image: strandImg,
+      },
+      {
+        title: "Waterdunen",
+        desc: "A unique nature and recreation area where ebb and flow have free rein.",
+        image: waterdunenImg,
+      },
+    ],
+  },
+  de: {
+    title: "Entdecken Sie Groede und Umgebung",
+    intro:
+      "Groede ist ein künstlerisches und historisches Dorf in Zeeuws-Vlaanderen. Lassen Sie sich von der authentischen Atmosphäre und der schönen Natur überraschen.",
+    highlights: [
+      {
+        title: "Marktplatz von Groede",
+        desc: "Direkt vor der Haustür finden Sie den gemütlichen Markt mit Terrassen und der Großen Kirche.",
+        image: marktImg,
+      },
+      {
+        title: "Der Strand",
+        desc: "Nur 3 Kilometer entfernt liegen die sauberste Strände der Niederlande.",
+        image: strandImg,
+      },
+      {
+        title: "Waterdunen",
+        desc: "Ein einzigartiges Natur- und Erholungsgebiet, in dem Ebbe und Flut freies Spiel haben.",
+        image: waterdunenImg,
+      },
+    ],
+  },
+};
+
+const t = content[lang as keyof typeof content];
+---
+
+<Layout title={`Omgeving - Logies De Reiziger`}>
+  <div class="bg-primary text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="font-serif text-4xl font-bold mb-4">{t.title}</h1>
+      <p class="text-xl max-w-2xl mx-auto opacity-90">{t.intro}</p>
+    </div>
+  </div>
+
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          t.highlights.map((item, index) => (
+            <div class="bg-white rounded shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="h-48 w-full overflow-hidden">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={800}
+                  height={600}
+                  class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div class="p-6">
+                <h3 class="font-serif text-xl font-bold text-primary mb-2">
+                  {item.title}
+                </h3>
+                <p class="text-gray-600">{item.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="h-96 w-full bg-gray-100">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2503.626458564175!2d3.50764131584344!3d51.3243187796054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c49b0ede4685ab%3A0x6b77241240192e21!2sMarkt%202%2C%204503%20AG%20Groede!5e0!3m2!1snl!2snl!4v1638891234567!5m2!1snl!2snl"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"></iframe>
+  </section>
+</Layout>

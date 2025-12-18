@@ -1,0 +1,46 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+import { ClientRouter } from "astro:transitions";
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const {
+    title,
+    description = "Logies De Reiziger - Verblijf in historisch Groede",
+} = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+            rel="stylesheet"
+        />
+        <title>{title}</title>
+        <ClientRouter />
+    </head>
+    <body
+        class="font-sans text-gray-800 bg-secondary flex flex-col min-h-screen"
+    >
+        <Header transition:persist />
+        <main class="flex-grow">
+            <slot />
+        </main>
+        <Footer />
+    </body>
+</html>

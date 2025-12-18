@@ -1,0 +1,20 @@
+---
+import { languages } from "../../i18n/ui";
+import { getRouteFromUrl } from "../../i18n/utils";
+
+const route = getRouteFromUrl(Astro.url);
+const currentLang = Astro.url.pathname.split("/")[1] || "nl";
+---
+
+<div class="flex space-x-2 text-sm uppercase font-medium">
+    {
+        Object.entries(languages).map(([lang, label]) => (
+            <a
+                href={`/${lang}${route ? (route.startsWith("/") ? route : "/" + route) : ""}`}
+                class={`hover:text-accent transition-colors ${lang === currentLang ? "text-accent border-b-2 border-accent" : "text-gray-600"}`}
+            >
+                {lang}
+            </a>
+        ))
+    }
+</div>

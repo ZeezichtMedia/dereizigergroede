@@ -1,0 +1,90 @@
+---
+
+---
+
+<!-- Lightbox Markup -->
+<div
+    id="lightbox"
+    class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300"
+    role="dialog"
+    aria-modal="true"
+>
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
+
+    <!-- UI Controls -->
+    <button
+        class="absolute top-4 right-4 z-50 text-white/70 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+        aria-label="Close"
+    >
+        <svg
+            class="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+
+    <button
+        id="prev-btn"
+        class="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white/70 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors hidden md:block"
+        aria-label="Previous image"
+    >
+        <svg
+            class="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <button
+        id="next-btn"
+        class="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white/70 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors hidden md:block"
+        aria-label="Next image"
+    >
+        <svg
+            class="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+
+    <!-- Main Image Container -->
+    <div
+        class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none"
+    >
+        <img
+            id="lightbox-img"
+            src=""
+            alt="Fullscreen gallery view"
+            class="max-h-[85vh] max-w-[90vw] object-contain rounded shadow-2xl scale-95 transition-transform duration-300 pointer-events-auto select-none"
+        />
+    </div>
+</div>
+
+<style>
+    /* Helper to hide scrollbar when lightbox is open */
+    :global(body.lightbox-open) {
+        overflow: hidden;
+    }
+</style>

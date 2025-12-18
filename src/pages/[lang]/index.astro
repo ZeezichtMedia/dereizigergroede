@@ -1,0 +1,485 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "../../i18n/utils";
+import { galleryImages } from "../../data/images";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "nl" } },
+        { params: { lang: "en" } },
+        { params: { lang: "de" } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+const content = {
+    nl: {
+        heroTitle: "Sfeervol overnachten in historisch Groede",
+        heroSubtitle:
+            "Geniet van rust, ruimte en comfort in ons monumentale pand aan de Markt.",
+        cta: "Bekijk onze kamers",
+        welcomeTitle: "Welkom thuis in Zeeland",
+        welcomeText:
+            "Gevestigd in een prachtig gerestaureerd monumentaal pand, bieden wij u een onvergetelijk verblijf in het hart van Groede. Onze kamers combineren authentieke details met modern comfort, perfect voor een ontspannen weekendje weg of een lange vakantie aan de Zeeuwse kust.",
+        stats: [
+            { label: "Kamers", value: "4", icon: "Bed" },
+            { label: "Meters van Strand", value: "2500", icon: "Waves" },
+            { label: "Beoordeling", value: "8.1", icon: "Star" },
+        ],
+        roomsTitle: "Onze Kamers",
+        roomsSubtitle:
+            "Kies de kamer die bij u past. Van knusse tweepersoonskamers tot een ruime familiekamer.",
+        surroundingsTitle: "Ontdek Groede en omgeving",
+        surroundingsText:
+            "Van uitgestrekte stranden tot pittoreske dorpjes. Zeeuws-Vlaanderen heeft alles voor de perfecte vakantie.",
+        surroundingsBtn: "Ontdek de omgeving",
+        reviewsTitle: "Wat onze gasten zeggen",
+        reviews: [
+            {
+                name: "Hubertus",
+                text: "Gezellige kamer op prachtige locatie (uitzicht op plein met kerk). Niet ver van de rivier De Schelde en het natuurpark Waterdunen.",
+            },
+            { name: "Katharina", text: "Goede en gezellige AirBnB. Alles ok." },
+            { name: "Regina", text: "Aanrader. Gezellig en goede lokatie." },
+        ],
+    },
+    en: {
+        heroTitle: "Atmospheric stay in historic Groede",
+        heroSubtitle:
+            "Enjoy peace, space and comfort in our monumental building on the Market Square.",
+        cta: "View our rooms",
+        welcomeTitle: "Welcome home in Zeeland",
+        welcomeText:
+            "Located in a beautifully restored monumental building, we offer you an unforgettable stay in the heart of Groede. Our rooms combine authentic details with modern comfort, perfect for a relaxing getaway.",
+        stats: [
+            { label: "Rooms", value: "4", icon: "Bed" },
+            { label: "Meters to Beach", value: "2500", icon: "Waves" },
+            { label: "Rating", value: "8.1", icon: "Star" },
+        ],
+        roomsTitle: "Our Rooms",
+        roomsSubtitle:
+            "Choose the room that suits you. From cozy double rooms to a spacious family room.",
+        surroundingsTitle: "Discover Groede and surroundings",
+        surroundingsText:
+            "From vast beaches to picturesque villages. Zeeland-Flanders has everything for the perfect holiday.",
+        surroundingsBtn: "Discover surroundings",
+        reviewsTitle: "Guest Reviews",
+        reviews: [
+            {
+                name: "Hubertus",
+                text: "Cozy room in a beautiful location (view of the square with church). Not far from the river Scheldt and the nature park Waterdunen.",
+            },
+            { name: "Katharina", text: "Good and cozy AirBnB. Everything ok." },
+            { name: "Regina", text: "Recommended. Cozy and good location." },
+        ],
+    },
+    de: {
+        heroTitle: "Atmosphärischer Aufenthalt im historischen Groede",
+        heroSubtitle:
+            "Genießen Sie Ruhe, Raum und Komfort in unserem denkmalgeschützten Gebäude am Markt.",
+        cta: "Zimmer ansehen",
+        welcomeTitle: "Willkommen zu Hause in Zeeland",
+        welcomeText:
+            "In einem wunderschön restaurierten denkmalgeschützten Gebäude bieten wir Ihnen einen unvergesslichen Aufenthalt im Herzen von Groede. Unsere Zimmer verbinden authentische Details mit modernem Komfort.",
+        stats: [
+            { label: "Zimmer", value: "4", icon: "Bed" },
+            { label: "Meter zum Strand", value: "2500", icon: "Waves" },
+            { label: "Bewertung", value: "8.1", icon: "Star" },
+        ],
+        roomsTitle: "Unsere Zimmer",
+        roomsSubtitle:
+            "Wählen Sie das Zimmer, das zu Ihnen passt. Von gemütlichen Doppelzimmern bis zum geräumigen Familienzimmer.",
+        surroundingsTitle: "Entdecken Sie Groede",
+        surroundingsText:
+            "Von weiten Stränden bis zu malerischen Dörfern. Seeländisch-Flandern hat alles für den perfekten Urlaub.",
+        surroundingsBtn: "Umgebung entdecken",
+        reviewsTitle: "Gästebewertungen",
+        reviews: [
+            {
+                name: "Hubertus",
+                text: "Gemütliches Zimmer in schöner Lage (Blick auf den Platz mit Kirche). Nicht weit von der Schelde und dem Naturpark Waterdunen.",
+            },
+            {
+                name: "Katharina",
+                text: "Gute und gemütliche AirBnB. Alles ok.",
+            },
+            {
+                name: "Regina",
+                text: "Sehr empfehlenswert. Gemütlich und gute Lage.",
+            },
+        ],
+    },
+};
+
+const t = content[lang as keyof typeof content];
+
+const featuredImages = [
+    galleryImages[17], // Exterior/Hero
+    galleryImages[46], // Family Room
+    galleryImages[2], // Detail
+    galleryImages[30], // Breakfast/Sfeer
+];
+
+const rooms = [
+    {
+        name: "Tweepersoonskamer 1",
+        image: galleryImages[6],
+        url: "kamer/tweepersoonskamer-1",
+        price: "€ 95",
+    },
+    {
+        name: "Tweepersoonskamer 2",
+        image: galleryImages[36],
+        url: "kamer/tweepersoonskamer-2",
+        price: "€ 95",
+    },
+    {
+        name: "Tweepersoonskamer 3",
+        image: galleryImages[42],
+        url: "kamer/tweepersoonskamer-3",
+        price: "€ 95",
+    },
+    {
+        name: "Familiekamer",
+        image: galleryImages[46],
+        url: "kamer/familiekamer",
+        price: "€ 120",
+    },
+];
+---
+
+<Layout title="Logies De Reiziger | Groede">
+    <!-- Hero Section (Split Layout) -->
+    <section class="relative bg-secondary overflow-hidden">
+        <div class="container mx-auto px-4 py-12 md:py-24 lg:py-32">
+            <div
+                class="flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+            >
+                <!-- Text Content (First on Mobile) -->
+                <div class="w-full animate-fade-up relative z-10">
+                    <span
+                        class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6"
+                    >
+                        Logies De Reiziger
+                    </span>
+                    <h1
+                        class="font-serif text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight"
+                    >
+                        {t.heroTitle}
+                    </h1>
+                    <p
+                        class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-lg"
+                    >
+                        {t.heroSubtitle}
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a
+                            href={getRelativeLocaleUrl(lang, "accommodatie")}
+                            class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-primary border-2 border-transparent rounded-xl hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-gold hover:shadow-lg transform hover:-translate-y-0.5"
+                        >
+                            {t.cta}
+                        </a>
+                        <a
+                            href={getRelativeLocaleUrl(lang, "contact")}
+                            class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-primary transition-all duration-200 bg-transparent border-2 border-primary/20 rounded-xl hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                        >
+                            Contact
+                        </a>
+                    </div>
+
+                    <!-- Small Features -->
+                    <div
+                        class="mt-8 md:mt-12 flex items-center gap-8 text-sm font-medium text-gray-500"
+                    >
+                        <div class="flex items-center gap-2">
+                            <svg
+                                class="w-5 h-5 text-accent"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path></svg
+                            >
+                            Gratis WiFi
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg
+                                class="w-5 h-5 text-accent"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path></svg
+                            >
+                            Centrum Groede
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Collage (Second on Mobile) -->
+                <div
+                    class="w-full relative h-[400px] md:h-[600px] mt-8 lg:mt-0 group"
+                >
+                    <div
+                        class="absolute inset-0 grid grid-cols-2 gap-4 transition-transform duration-700 ease-out-expo"
+                    >
+                        <div
+                            class="space-y-4 pt-12 lg:group-hover:-translate-y-12 transition-transform duration-700 ease-out-expo"
+                        >
+                            <div
+                                class="aspect-[3/4] rounded-2xl overflow-hidden shadow-soft"
+                            >
+                                <img
+                                    src={featuredImages[0]}
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                                    alt="Exterior"
+                                />
+                            </div>
+                            <div
+                                class="aspect-[4/3] rounded-2xl overflow-hidden shadow-soft"
+                            >
+                                <img
+                                    src={featuredImages[2]}
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                                    alt="Detail"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="space-y-4 lg:group-hover:translate-y-12 transition-transform duration-700 ease-out-expo"
+                        >
+                            <div
+                                class="aspect-[4/3] rounded-2xl overflow-hidden shadow-soft"
+                            >
+                                <img
+                                    src={featuredImages[3]}
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                                    alt="Breakfast"
+                                />
+                            </div>
+                            <div
+                                class="aspect-[3/4] rounded-2xl overflow-hidden shadow-soft"
+                            >
+                                <img
+                                    src={featuredImages[1]}
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                                    alt="Room"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro / Welcome Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-up">
+                <h2
+                    class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-6"
+                >
+                    {t.welcomeTitle}
+                </h2>
+                <p class="text-xl text-gray-600 leading-relaxed text-balance">
+                    {t.welcomeText}
+                </p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {
+                    t.stats.map((stat) => (
+                        <div class="p-8 bg-secondary rounded-2xl text-center hover:shadow-soft transition-shadow duration-300 border border-gray-100/50">
+                            <div class="text-accent mb-4 flex justify-center">
+                                {stat.icon === "Bed" && (
+                                    <svg
+                                        class="w-8 h-8"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                        />
+                                    </svg>
+                                )}
+                                {stat.icon === "Waves" && (
+                                    <svg
+                                        class="w-8 h-8"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                                        />
+                                    </svg>
+                                )}
+                                {stat.icon === "Star" && (
+                                    <svg
+                                        class="w-8 h-8"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                )}
+                            </div>
+                            <div class="text-4xl font-serif font-bold text-gray-900 mb-2">
+                                {stat.value}
+                            </div>
+                            <div class="text-gray-500 font-medium">
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Showcase -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2
+                    class="font-serif text-3xl md:text-5xl font-bold text-gray-900 mb-6"
+                >
+                    {t.roomsTitle}
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    {t.roomsSubtitle}
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {
+                    rooms.map((room) => (
+                        <a
+                            href={getRelativeLocaleUrl(lang, room.url)}
+                            class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block"
+                        >
+                            <div class="relative h-64 overflow-hidden">
+                                <img
+                                    src={room.image}
+                                    alt={room.name}
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                />
+                                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold text-primary shadow-sm">
+                                    Vanaf {room.price}
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-serif text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition-colors">
+                                    {room.name}
+                                </h3>
+                                <div class="flex items-center text-accent font-medium text-sm">
+                                    Bekijk kamer{" "}
+                                    <svg
+                                        class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews / Testimonials -->
+    <section class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-4">
+            <h2
+                class="font-serif text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16"
+            >
+                {t.reviewsTitle}
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {
+                    t.reviews.map((review) => (
+                        <div class="bg-secondary p-8 rounded-2xl relative">
+                            <svg
+                                class="w-10 h-10 text-accent/20 absolute top-6 left-6"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z" />
+                            </svg>
+                            <p class="text-gray-600 italic mb-6 relative z-10 pt-8">
+                                "{review.text}"
+                            </p>
+                            <div class="font-bold text-gray-900 border-t border-gray-200 pt-4">
+                                {review.name}
+                            </div>
+                            <div class="flex text-yellow-400 mt-2">
+                                {[...Array(5)].map(() => (
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                ))}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Surroundings Teaser -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img
+                src={galleryImages[29]}
+                alt="Strand Groede"
+                class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-primary/80"></div>
+        </div>
+        <div
+            class="container mx-auto px-4 relative z-10 text-center text-white"
+        >
+            <h2 class="font-serif text-3xl md:text-5xl font-bold mb-6">
+                {t.surroundingsTitle}
+            </h2>
+            <p class="text-xl max-w-2xl mx-auto mb-10 text-white/90">
+                {t.surroundingsText}
+            </p>
+            <a
+                href={getRelativeLocaleUrl(lang, "omgeving")}
+                class="inline-block bg-white text-primary font-bold py-4 px-8 rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
+            >
+                {t.surroundingsBtn}
+            </a>
+        </div>
+    </section>
+</Layout>

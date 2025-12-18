@@ -1,0 +1,120 @@
+---
+import {
+    getLangFromUrl,
+    useTranslations,
+    getRelativeLocaleUrl,
+} from "../../i18n/utils";
+import LanguagePicker from "./LanguagePicker.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navItems = [
+    { href: "", label: t("nav.home") }, // Root of lang
+    { href: "accommodatie", label: t("nav.accommodation") },
+    { href: "omgeving", label: t("nav.surroundings") },
+    { href: "gallerij", label: t("nav.gallery") },
+    { href: "beschikbaarheid", label: t("nav.availability") },
+    { href: "contact", label: t("nav.contact") },
+];
+---
+
+<header class="bg-white text-primary shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a href={getRelativeLocaleUrl(lang, "")} class="block w-48 md:w-56">
+            <img
+                src="/logo.png"
+                alt="Logies De Reiziger"
+                class="w-full h-auto object-contain"
+            />
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center space-x-8">
+            <ul class="flex space-x-6">
+                {
+                    navItems.map((item) => (
+                        <li>
+                            <a
+                                href={getRelativeLocaleUrl(lang, item.href)}
+                                class="font-medium hover:text-accent transition-colors"
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+            <div class="pl-6 border-l border-gray-200">
+                <LanguagePicker />
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button
+            id="mobile-menu-btn"
+            class="md:hidden text-primary hover:text-accent p-2"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white border-t border-gray-100"
+    >
+        <ul class="flex flex-col p-4 space-y-4">
+            {
+                navItems.map((item) => (
+                    <li>
+                        <a
+                            href={getRelativeLocaleUrl(lang, item.href)}
+                            class="block py-2 text-lg font-medium hover:text-accent"
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                ))
+            }
+            <li class="pt-4 border-t border-gray-100">
+                <LanguagePicker />
+            </li>
+        </ul>
+    </div>
+</header>
+
+<script>
+    function setupMobileMenu() {
+        const btn = document.getElementById("mobile-menu-btn");
+        const menu = document.getElementById("mobile-menu");
+
+        // Remove old listener if exists to prevent duplicates (though with persist it shouldn't happen often)
+        const newBtn = btn?.cloneNode(true);
+        if (btn && newBtn && btn.parentNode) {
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener("click", () => {
+                menu?.classList.toggle("hidden");
+            });
+        }
+    }
+
+    // Run on initial load
+    setupMobileMenu();
+
+    // Run on view transitions navigation
+    document.addEventListener("astro:after-swap", setupMobileMenu);
+</script>

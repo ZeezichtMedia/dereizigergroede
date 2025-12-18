@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { galleryImages } from "../data/images";
+---
+
+<Layout title="Image Scan">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Image Scan</h1>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {
+                galleryImages.map((src, index) => (
+                    <div class="border rounded-lg p-2 bg-white shadow-sm">
+                        <div class="relative aspect-video mb-2">
+                            <img
+                                src={src}
+                                alt={`Image ${index}`}
+                                class="w-full h-full object-cover rounded"
+                                loading="lazy"
+                            />
+                            <div class="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                                #{index}
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500 break-all">{src}</div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Layout>

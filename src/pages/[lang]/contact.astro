@@ -1,0 +1,202 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "nl" } },
+        { params: { lang: "en" } },
+        { params: { lang: "de" } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+const content = {
+    nl: {
+        title: "Contact",
+        intro: "Heeft u vragen of wilt u reserveren? Wij staan u graag te woord.",
+        addressTitle: "Adresgegevens",
+        contactTitle: "Contactgegevens",
+        formTitle: "Stuur ons een bericht",
+        name: "Naam",
+        email: "E-mail",
+        message: "Bericht",
+        send: "Verstuur",
+        whatsapp: "Stuur ons een WhatsApp",
+    },
+    en: {
+        title: "Contact",
+        intro: "Do you have questions or want to make a reservation? We are happy to help.",
+        addressTitle: "Address",
+        contactTitle: "Contact Details",
+        formTitle: "Send us a message",
+        name: "Name",
+        email: "Email",
+        message: "Message",
+        send: "Send",
+        whatsapp: "Send us a WhatsApp",
+    },
+    de: {
+        title: "Kontakt",
+        intro: "Haben Sie Fragen oder möchten Sie reservieren? Wir helfen Ihnen gerne weiter.",
+        addressTitle: "Adresse",
+        contactTitle: "Kontaktdaten",
+        formTitle: "Schreiben Sie uns",
+        name: "Name",
+        email: "E-Mail",
+        message: "Nachricht",
+        send: "Senden",
+        whatsapp: "Schreiben Sie uns auf WhatsApp",
+    },
+};
+
+const t = content[lang as keyof typeof content];
+---
+
+<Layout title={`${t.title} - Logies De Reiziger`}>
+    <div class="bg-primary text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="font-serif text-4xl font-bold mb-4">{t.title}</h1>
+            <p class="text-xl max-w-2xl mx-auto opacity-90">{t.intro}</p>
+        </div>
+    </div>
+
+    <section class="py-20">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Info & Map -->
+                <div>
+                    <div
+                        class="bg-white p-8 rounded-lg shadow-sm border border-gray-100 mb-8"
+                    >
+                        <h2
+                            class="font-serif text-2xl font-bold text-primary mb-6"
+                        >
+                            {t.contactTitle}
+                        </h2>
+
+                        <div class="space-y-4 text-gray-600">
+                            <div>
+                                <strong class="block text-primary"
+                                    >{t.addressTitle}:</strong
+                                >
+                                <p>Markt 2</p>
+                                <p>4503 AG Groede</p>
+                                <p>Zeeland, Nederland</p>
+                            </div>
+
+                            <div>
+                                <strong class="block text-primary"
+                                    >Tel / WhatsApp:</strong
+                                >
+                                <a
+                                    href="https://wa.me/31640839547"
+                                    class="text-accent font-medium hover:underline flex items-center gap-2"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-message-circle"
+                                        ><path
+                                            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+                                        ></path></svg
+                                    >
+                                    +31 6 40839547
+                                </a>
+                            </div>
+                        </div>
+
+                        <a
+                            href="https://wa.me/31640839547"
+                            class="mt-6 inline-block bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition-colors font-medium"
+                        >
+                            {t.whatsapp}
+                        </a>
+                    </div>
+
+                    <!-- Map -->
+                    <div
+                        class="rounded-lg overflow-hidden h-64 shadow-sm border border-gray-100"
+                    >
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2503.626458564175!2d3.50764131584344!3d51.3243187796054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c49b0ede4685ab%3A0x6b77241240192e21!2sMarkt%202%2C%204503%20AG%20Groede!5e0!3m2!1snl!2snl!4v1638891234567!5m2!1snl!2snl"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-inner">
+                    <h2 class="font-serif text-2xl font-bold text-primary mb-6">
+                        {t.formTitle}
+                    </h2>
+                    <form
+                        class="space-y-6"
+                        onsubmit="event.preventDefault(); alert('This is a demo form.');"
+                    >
+                        <div>
+                            <label
+                                for="name"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >{t.name}</label
+                            >
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary outline-none transition-colors"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                for="email"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >{t.email}</label
+                            >
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary outline-none transition-colors"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                for="message"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >{t.message}</label
+                            >
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="5"
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary outline-none transition-colors"
+                                required></textarea>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="w-full bg-primary text-white font-medium py-3 rounded hover:bg-opacity-90 transition-opacity"
+                        >
+                            {t.send}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>

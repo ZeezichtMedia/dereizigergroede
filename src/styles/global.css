@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #2C3E50;
+    --color-secondary: #F9F9F7;
+    --color-accent: #C5A059;
+
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer utilities {
+    .shadow-soft {
+        box-shadow: 0 25px 50px -12px rgba(44, 62, 80, 0.15);
+    }
+
+    .shadow-gold {
+        box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.2);
+    }
+
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+/* Premium Typography Defaults */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Smooth Fade Up Animation */
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fade-up 1.0s var(--ease-out-expo) forwards;
+}
+
+/* Customize View Transitions for a "High End" feel */
+::view-transition-group(root) {
+    animation-duration: 0.3s;
+    /* Faster overall transition */
+}
+
+::view-transition-old(root) {
+    /* Fade out quickly to avoid "double text" overlap */
+    animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
+}
+
+::view-transition-new(root) {
+    /* Slide in smoothly */
+    animation: 300ms cubic-bezier(0, 0, 0.2, 1) both fade-in, 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-up;
+    mix-blend-mode: normal;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(15px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}

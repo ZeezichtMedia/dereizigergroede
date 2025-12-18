@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "nl" } },
+        { params: { lang: "en" } },
+        { params: { lang: "de" } },
+    ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout title="Beschikbaarheid - Logies De Reiziger">
+    <div class="container mx-auto px-4 py-16 max-w-4xl">
+        <h1
+            class="text-3xl md:text-4xl font-serif font-bold text-primary mb-8 text-center"
+        >
+            Beschikbaarheid
+        </h1>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <link
+                href="https://www.huurkalender.nl/online/embed/huurkalender.css"
+                rel="stylesheet"
+            />
+            <div
+                class="huurkalender-embed huurkalender-embed-container_overview"
+            >
+                <iframe
+                    id="iframe_huurkalender_view2_16574"
+                    src="https://www.huurkalender.nl/vacancy/all/summary-16574.html?type=iframe&lang=nl"
+                    frameborder="0"
+                    height="225px;"
+                    width="100%"
+                    allowfullscreen=""
+                    style="visibility: visible; height: 290px;"
+                >
+                </iframe>
+                <script
+                    type="text/javascript"
+                    src="https://www.huurkalender.nl/online/embed/huurkalender.js"
+                ></script>
+            </div>
+        </div>
+    </div>
+</Layout>
