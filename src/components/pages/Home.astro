@@ -1,0 +1,385 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "../../i18n/utils";
+import { galleryImages } from "../../data/images";
+
+interface Props {
+    lang: "nl" | "en" | "de";
+}
+
+const { lang } = Astro.props;
+
+const content = {
+    nl: {
+        heroTitle: "Logies De Reiziger",
+        heroSubtitle: "Rust, ruimte en comfort in hartje Groede",
+        welcomeTitle: "Welkom bij De Reiziger",
+        welcomeText:
+            "Gevestigd in een prachtig gerenoveerd pand aan de historische markt van Groede. Geniet van luxe, privacy en de Zeeuwse gastvrijheid.",
+        roomsTitle: "Onze Kamers",
+        roomsBtn: "Bekijk alle kamers",
+        features: [
+            {
+                icon: "wifi",
+                title: "Gratis WiFi",
+                desc: "Overal snel internet",
+            },
+            {
+                icon: "parking",
+                title: "Parkeren",
+                desc: "Gratis parkeren in de buurt",
+            },
+            {
+                icon: "breakfast",
+                title: "Ontbijtservice",
+                desc: "Heerlijk streekontbijt",
+            },
+        ],
+        reviewsTitle: "Wat onze gasten zeggen",
+    },
+    en: {
+        heroTitle: "Logies De Reiziger",
+        heroSubtitle: "Peace, space and comfort in the heart of Groede",
+        welcomeTitle: "Welcome to De Reiziger",
+        welcomeText:
+            "Located in a beautifully renovated building on the historic market square of Groede. Enjoy luxury, privacy and Zeeland hospitality.",
+        roomsTitle: "Our Rooms",
+        roomsBtn: "View all rooms",
+        features: [
+            {
+                icon: "wifi",
+                title: "Free WiFi",
+                desc: "Fast internet everywhere",
+            },
+            {
+                icon: "parking",
+                title: "Parking",
+                desc: "Free parking nearby",
+            },
+            {
+                icon: "breakfast",
+                title: "Breakfast Service",
+                desc: "Delicious local breakfast",
+            },
+        ],
+        reviewsTitle: "What our guests say",
+    },
+    de: {
+        heroTitle: "Logies De Reiziger",
+        heroSubtitle: "Ruhe, Raum und Komfort im Herzen von Groede",
+        welcomeTitle: "Willkommen bei De Reiziger",
+        welcomeText:
+            "Das Hotel liegt in einem wunderschön renovierten Gebäude am historischen Marktplatz von Groede. Genießen Sie Luxus, Privatsphäre und seeländische Gastfreundschaft.",
+        roomsTitle: "Unsere Zimmer",
+        roomsBtn: "Alle Zimmer ansehen",
+        features: [
+            {
+                icon: "wifi",
+                title: "Gratis WiFi",
+                desc: "Überall schnelles Internet",
+            },
+            {
+                icon: "parking",
+                title: "Parken",
+                desc: "Kostenlose Parkplätze in der Nähe",
+            },
+            {
+                icon: "breakfast",
+                title: "Frühstücksservice",
+                desc: "Köstliches regionales Frühstück",
+            },
+        ],
+        reviewsTitle: "Was unsere Gäste sagen",
+    },
+};
+
+const t = content[lang];
+
+const featuredImages = [
+    galleryImages[17], // Exterior/Hero
+    galleryImages[46], // Family Room
+    galleryImages[2], // Detail
+    galleryImages[30], // Breakfast/Sfeer
+];
+
+const rooms = [
+    {
+        name: "Tweepersoonskamer 1",
+        image: galleryImages[6],
+        url: "kamer/tweepersoonskamer-1",
+        price: "€ 95",
+    },
+    {
+        name: "Tweepersoonskamer 2",
+        image: galleryImages[36],
+        url: "kamer/tweepersoonskamer-2",
+        price: "€ 95",
+    },
+    {
+        name: "Tweepersoonskamer 3",
+        image: galleryImages[42],
+        url: "kamer/tweepersoonskamer-3",
+        price: "€ 95",
+    },
+    {
+        name: "Familiekamer",
+        image: galleryImages[46],
+        url: "kamer/familiekamer",
+        price: "€ 130",
+    },
+];
+
+const reviews = [
+    {
+        name: "M. Jansen",
+        date: "Augustus 2024",
+        rating: 5,
+        text: "Fantastisch verblijf gehad! De locatie aan de markt is perfect en de kamers zijn prachtig afgewerkt.",
+    },
+    {
+        name: "K. Weber",
+        date: "Juli 2024",
+        rating: 5,
+        text: "Wunderschönes B&B. Sehr freundlicher Empfang und tolles Frühstück.",
+    },
+    {
+        name: "S. Williams",
+        date: "Juni 2024",
+        rating: 5,
+        text: "Lovely place to stay. The room was very clean and spacious. Highly recommended!",
+    },
+];
+---
+
+<Layout title="Logies De Reiziger - Groede">
+    <!-- Hero Section -->
+    <div class="relative h-[80vh] min-h-[600px] overflow-hidden">
+        <div class="absolute inset-0">
+            <img
+                src={featuredImages[0]}
+                alt="Logies De Reiziger Exterior"
+                class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+        <div
+            class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white"
+        >
+            <h1
+                class="font-serif text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg"
+            >
+                {t.heroTitle}
+            </h1>
+            <p
+                class="text-xl md:text-2xl font-light mb-10 max-w-2xl drop-shadow-md"
+            >
+                {t.heroSubtitle}
+            </p>
+            <a
+                href={getRelativeLocaleUrl(lang, "accommodatie")}
+                class="bg-accent text-white py-4 px-10 rounded-full font-bold text-lg hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-xl"
+            >
+                {t.roomsBtn}
+            </a>
+        </div>
+    </div>
+
+    <!-- Intro Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="font-serif text-4xl font-bold text-primary mb-6">
+                        {t.welcomeTitle}
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                        {t.welcomeText}
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {
+                            t.features.map((feature) => (
+                                <div class="flex items-start space-x-4">
+                                    <div class="bg-secondary p-3 rounded-lg text-primary">
+                                        {/* Simple icon check based on name */}
+                                        {feature.icon === "wifi" && (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="w-6 h-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
+                                                />
+                                            </svg>
+                                        )}
+                                        {feature.icon === "parking" && (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="w-6 h-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M5 10l7-7m0 0l7 7m-7-7v18"
+                                                />
+                                            </svg>
+                                        )}
+                                        {feature.icon === "breakfast" && (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="w-6 h-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                                                />
+                                            </svg>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">
+                                            {feature.title}
+                                        </h4>
+                                        <p class="text-sm text-gray-500">
+                                            {feature.desc}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative h-[500px] w-full">
+                    <div
+                        class="absolute top-4 left-4 w-full h-full border-2 border-accent rounded-lg"
+                    >
+                    </div>
+                    <img
+                        src={featuredImages[1]}
+                        alt="Familiekamer Interior"
+                        class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-xl hover:scale-[1.01] transition-transform duration-500"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Preview -->
+    <section class="py-20 bg-secondary/30">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-accent font-serif italic text-xl"
+                    >Ontdek het comfort</span
+                >
+                <h2 class="font-serif text-4xl font-bold text-primary mt-2">
+                    {t.roomsTitle}
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {
+                    rooms.map((room) => (
+                        <a
+                            href={getRelativeLocaleUrl(lang, room.url)}
+                            class="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                        >
+                            <div class="relative h-64 overflow-hidden">
+                                <img
+                                    src={room.image}
+                                    alt={room.name}
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-serif text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                                    {room.name}
+                                </h3>
+                                {/* <p class="text-gray-500 mb-4">Luxurious & Spacious</p> */}
+                                <div class="flex justify-between items-center mt-4">
+                                    <span class="text-accent font-bold">
+                                        Vanaf {room.price}
+                                    </span>
+                                    <span class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        →
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+            <div class="text-center mt-12">
+                <a
+                    href={getRelativeLocaleUrl(lang, "accommodatie")}
+                    class="inline-block border-2 border-primary text-primary py-3 px-8 rounded hover:bg-primary hover:text-white transition-colors font-bold"
+                >
+                    {t.roomsBtn}
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Parallax -->
+    <section class="relative py-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img
+                src={featuredImages[3]}
+                alt="Breakfast"
+                class="w-full h-full object-cover fixed-bg"
+            />
+            <div class="absolute inset-0 bg-primary/80"></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <h2
+                class="font-serif text-3xl md:text-4xl font-bold text-center text-white mb-16"
+            >
+                {t.reviewsTitle}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {
+                    reviews.map((review) => (
+                        <div class="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 text-white">
+                            <div class="flex text-accent mb-4">
+                                {"★".repeat(review.rating)}
+                            </div>
+                            <p class="italic opacity-90 mb-6 leading-relaxed">
+                                "{review.text}"
+                            </p>
+                            <div class="font-bold font-serif">
+                                {review.name}
+                            </div>
+                            <div class="text-xs opacity-60 uppercase tracking-wider">
+                                {review.date}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .fixed-bg {
+        /* Simple parallax effect */
+        /* attachment fixed not working on mobile often, better use JS or just static for stability */
+        /* background-attachment: fixed; */
+    }
+</style>
